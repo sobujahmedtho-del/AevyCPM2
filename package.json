@@ -1,0 +1,15 @@
+{
+  "name": "aevycpm",
+  "version": "1.0.0",
+  "private": true,
+  "description": "AevyCPM - open script publishing site on Cloudflare Pages, Workers, D1 and R2",
+  "scripts": {
+    "dev:api": "wrangler dev --port 8787",
+    "dev:web": "wrangler pages dev frontend --port 8788",
+    "db:local": "wrangler d1 execute aevycpm --local --file=schema.sql",
+    "db:remote": "wrangler d1 execute aevycpm --remote --file=schema.sql",
+    "deploy:api": "wrangler deploy",
+    "deploy:web": "wrangler pages deploy frontend --project-name aevycpm"
+  },
+  "devDependencies": { "wrangler": "^4" }
+}

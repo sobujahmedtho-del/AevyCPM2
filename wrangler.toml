@@ -1,0 +1,28 @@
+# Cloudflare Worker (API). Deploy with: npx wrangler deploy
+name = "aevycpm-api"
+main = "worker/index.js"
+compatibility_date = "2024-11-01"
+
+[vars]
+# Comma separated list of frontend origins allowed to call the API cross-origin.
+# Not needed if the Worker is routed on the same domain as the site (/api/*).
+ALLOWED_ORIGIN = "https://aevycpm.pages.dev"
+MAX_UPLOAD_MB = "5"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "aevycpm"
+database_id = "REPLACE_WITH_YOUR_D1_DATABASE_ID"   # printed by: npx wrangler d1 create aevycpm
+
+[[r2_buckets]]
+binding = "FILES"
+bucket_name = "aevycpm-files"                        # private bucket, never enable public access
+
+# Optional: serve the API on the same domain as the site (no CORS needed).
+# Requires the domain to be on Cloudflare. Uncomment and edit:
+# routes = [{ pattern = "example.com/api/*", zone_name = "example.com" }]
+
+# Secrets (never commit these). Set with `npx wrangler secret put <NAME>`:
+#   ADMIN_PASSWORD   - password for the admin panel
+#   SESSION_SECRET   - long random string used to sign tokens and hash IPs
+#   TURNSTILE_SECRET - optional, enables Cloudflare Turnstile on the upload form
